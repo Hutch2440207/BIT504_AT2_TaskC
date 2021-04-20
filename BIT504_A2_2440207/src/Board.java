@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Board {
 	// grid line width
-	public static final int GRID_WIDTH = 8;
+	public static final int GRID_WIDTH = 6;
 	// grid line half width
 	public static final int GRID_WIDHT_HALF = GRID_WIDTH / 2;
 	
@@ -69,7 +69,7 @@ public class Board {
 	 */
 	public void paint(Graphics g) {
 		//draw the grid
-		g.setColor(Color.gray);
+		g.setColor(Color.black);
 		for (int row = 1; row < GameMain.ROWS; ++row) {          
 			g.fillRoundRect(0, GameMain.CELL_SIZE * row - GRID_WIDHT_HALF,                
 					GameMain.CANVAS_WIDTH - 1, GRID_WIDTH,                
