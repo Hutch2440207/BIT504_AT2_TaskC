@@ -13,7 +13,7 @@ public class GameMain extends JPanel implements MouseListener{
 
 	//constants for dimensions used for drawing
 	//cell width and height
-	public static final int CELL_SIZE = 100;
+	public static final int CELL_SIZE = 200;
 	//drawing canvas
 	public static final int CANVAS_WIDTH = CELL_SIZE * COLS;
 	public static final int CANVAS_HEIGHT = CELL_SIZE * ROWS;
@@ -108,10 +108,10 @@ public class GameMain extends JPanel implements MouseListener{
 				statusBar.setForeground(Color.RED);          
 				statusBar.setText("It's a Draw! Click to play again.");       
 			} else if (currentState == GameState.Cross_won) {          
-				statusBar.setForeground(Color.RED);          
+				statusBar.setForeground(Color.ORANGE);          
 				statusBar.setText("'X' Won! Click to play again.");       
 			} else if (currentState == GameState.Nought_won) {          
-				statusBar.setForeground(Color.RED);          
+				statusBar.setForeground(Color.GREEN);          
 				statusBar.setText("'O' Won! Click to play again.");       
 			}
 		}
@@ -152,44 +152,44 @@ public class GameMain extends JPanel implements MouseListener{
 					currentState = GameState.Draw; //If not winner this will call the GameState draw enum and set the state to Draw
 			}
 		}
-		
-		/** Event handler for the mouse click on the JPanel. If selected cell is valid and Empty then current player is added to cell content.
-		 *  UpdateGame is called which will call the methods to check for winner or Draw. if none then GameState remains playing.
-		 *  If win or Draw then call is made to method that resets the game board.  Finally a call is made to refresh the canvas so that new symbol appears*/
-		public void mouseClicked(MouseEvent e) {  
-		    //Using getX and getY we can find out where the mouse was clicked and store in variables            
-			int mouseX = e.getX();             
-			int mouseY = e.getY();             
-	        //Now I know where the mouse was clicked I can take the cell and dividing by the cell size we can find the position to draw the player
-			int rowSelected = mouseY / CELL_SIZE;             
-			int colSelected = mouseX / CELL_SIZE;               			
-			if (currentState == GameState.Playing) {                
-				if (rowSelected >= 0 && rowSelected < ROWS && colSelected >= 0 && colSelected < COLS && board.cells[rowSelected][colSelected].content == Player.Empty) {
-					//The above checks to see if the selected cell is empty. If true then it is the current players move 
-					board.cells[rowSelected][colSelected].content = currentPlayer; 
-					//Once the move is made the game updates                  
-					updateGame(currentPlayer, rowSelected, colSelected); 
-					// Switch player
-					if(currentPlayer == Player.Cross) {
-						currentPlayer = Player.Nought;
-					} else {
-						currentPlayer = Player.Cross;
-					}
+	
+	/** Event handler for the mouse pressed on the JPanel. This was changed from mouse clicked as a small movement of the mouse may prevent the player from
+	 * 	registering on the game board. This provides a smoother game play. 
+	 * 	If selected cell is valid and Empty then current player is added to cell content.
+	 *  UpdateGame is called which will call the methods to check for winner or Draw. if none then GameState remains playing.
+	 *  If win or Draw then call is made to method that resets the game board.  Finally a call is made to refresh the canvas so that new symbol appears*/
+	public void mousePressed(MouseEvent e) {
+		//Using getX and getY we can find out where the mouse was clicked and store in variables            
+		int mouseX = e.getX();             
+		int mouseY = e.getY();             
+        //Now I know where the mouse was clicked I can take the cell and dividing by the cell size we can find the position to draw the player
+		int rowSelected = mouseY / CELL_SIZE;             
+		int colSelected = mouseX / CELL_SIZE;               			
+		if (currentState == GameState.Playing) {                
+			if (rowSelected >= 0 && rowSelected < ROWS && colSelected >= 0 && colSelected < COLS && board.cells[rowSelected][colSelected].content == Player.Empty) {
+				//The above checks to see if the selected cell is empty. If true then it is the current players move 
+				board.cells[rowSelected][colSelected].content = currentPlayer; 
+				//Once the move is made the game updates                  
+				updateGame(currentPlayer, rowSelected, colSelected); 
+				// Switch player
+				if(currentPlayer == Player.Cross) {
+					currentPlayer = Player.Nought;
+				} else {
+					currentPlayer = Player.Cross;
 				}
-//				            
-			} else {        
-				// game over and restart              
-				initGame();            
-			}   
-			repaint(); //Calling this awt component we only need to repaint a small area/component rather than the whole program       
-//	           
-		}	
+			}        
+		} else {        
+			// game over and restart              
+			initGame();            
+		}   
+		repaint(); //Calling this awt component we only need to repaint a small area/component rather than the whole program
+	}
 	
 	@Override
-	public void mousePressed(MouseEvent e) {
-		//  Auto-generated, event not used
-		
+	public void mouseClicked(MouseEvent e) {  
+	//  Auto-generated, event not used
 	}
+	
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		//  Auto-generated, event not used
