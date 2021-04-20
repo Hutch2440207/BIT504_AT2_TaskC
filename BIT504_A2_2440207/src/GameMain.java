@@ -13,7 +13,7 @@ public class GameMain extends JPanel implements MouseListener{
 
 	//constants for dimensions used for drawing
 	//cell width and height
-	public static final int CELL_SIZE = 100;
+	public static final int CELL_SIZE = 200;
 	//drawing canvas
 	public static final int CANVAS_WIDTH = CELL_SIZE * COLS;
 	public static final int CANVAS_HEIGHT = CELL_SIZE * ROWS;
@@ -108,10 +108,10 @@ public class GameMain extends JPanel implements MouseListener{
 				statusBar.setForeground(Color.RED);          
 				statusBar.setText("It's a Draw! Click to play again.");       
 			} else if (currentState == GameState.Cross_won) {          
-				statusBar.setForeground(Color.RED);          
+				statusBar.setForeground(Color.ORANGE);          
 				statusBar.setText("'X' Won! Click to play again.");       
 			} else if (currentState == GameState.Nought_won) {          
-				statusBar.setForeground(Color.RED);          
+				statusBar.setForeground(Color.GREEN);          
 				statusBar.setText("'O' Won! Click to play again.");       
 			}
 		}
